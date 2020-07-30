@@ -1,0 +1,38 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	{% if answered_already %}
+		<div class="media content">
+			<div class="media-body">
+				<p>You have already made a guess for this post. <a href="{% url 'post-detail' post_to_guess.id %}">Click here</a> to see the responses.</p>
+			</div>
+		</div>
+	{% else %}
+		<div class="media content">
+			<div class="media-body">
+				<p>{{ post_to_guess.setup }}</p>
+				<form method="post" action="">
+					{% csrf_token %}
+					{{ form.punchline }}
+					<input type="submit" value="submit" class="btn btn-default btn-block" />
+					<input type="hidden" name="next" value="{{ next }}" />
+				</form>
+			</div>
+		</div>
+		<div>
+			{% if user.is_authenticated %}
+			{% else %}
+				<small class="text-muted">
+					{{ num_correct }} correct, {{ num_attempts }} attempts.
+					<a href="{% url 'login' %}">Log in</a> or <a href="{% url 'register' %}">register</a> to save your score!
+				</small>
+			{% endif %}
+		</div>
+	{% endif %}
+	
+{% endblock %}
+
+{% block scripts %}
+	{% load static %}
+    <script src="{% static 'js/input_formatting.js' %}"></script>
+{% endblock %}

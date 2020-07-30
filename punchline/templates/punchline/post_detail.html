@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	{% if answered_already %}
+		<div class="media content">
+	        <div class="media-body">
+	        	<h4><a href="#" class="media-heading">{{ post.title }}</a></h4>
+	        	<p class="text-muted">Submitted by <a href="#">{{ post.author }}</a> on <a href="#">{{ post.date_posted }}</a></p>
+	            <p>{{ post.setup }}</p>
+	            <p>{{ post.punchline }}</p>
+	        </div>
+	    </div>
+	    {% for response in post.response_set.all %}
+	    	<div class="media content border">
+	    		<div class="media-body">
+				{% if response.author %}
+				{% else %}
+					<p class=><a href="#">Anonymous</a> responded on <a href="#">{{ response.date_posted }}</a></p>
+					<p>{{ response }}</p>
+				{% endif %}
+			</div>
+		    </div>
+		{% endfor %}
+	{% else %}
+		<div class="media content">
+	        <div class="media-body">
+	            <p>You haven't guessed the punchline for this post yet. <a href="{% url 'guess' post.id %}">Click here</a> to try.</p>
+	        </div>
+	    </div>
+	{% endif %}
+{% endblock %}

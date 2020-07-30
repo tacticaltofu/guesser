@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p class="alert alert-danger">Sorry, I don't recognize you.</p>
+  {% endif %}
+  
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account does not have access to this page.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
+  <div class="form-box">
+	  <form method="post" action="{% url 'login' %}">
+	    {% csrf_token %}
+	    {{ form.username }}
+	    {{ form.password }}
+	    <input type="submit" value="login" class="btn btn-default btn-block" />
+	    <input type="hidden" name="next" value="{{ next }}" />
+	  </form>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'js/input_formatting.js' %}"></script>
+{% endblock %}

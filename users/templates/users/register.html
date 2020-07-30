@@ -1,0 +1,38 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  {% if form.errors %}
+    <div class="alert alert-danger left-align">
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li><small>{{ error }}</small></li>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account does not have access to this page.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
+  
+    <div class="form-box">
+	  <form method="post" action="{% url 'register' %}">
+	    {% csrf_token %}
+	    {{ form.username }}
+      {{ form.email }}
+      {{ form.password1 }} 
+      {{ form.password2 }} 
+	    <input type="submit" value="register" class="btn btn-default btn-block" />
+	    <input type="hidden" name="next" value="{{ next }}" />
+	  </form>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {% load static %}
+  <script src="{% static 'js/input_formatting.js' %}"></script>
+{% endblock %}
