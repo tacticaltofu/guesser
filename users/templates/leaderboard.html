@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+  <div class="form-box">
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Correct</th>
+        <th>Attempts</th>
+      </tr>
+        {% for profile in profiles %}
+          <tr>
+            <td><a href="{% url 'profile' profile.user.username %}">{{ profile.user.username }}</a></td>
+            <td>{{ profile.correct.count }}</td>
+            <td>{{ profile.attempted.count }}</td>
+          </tr>
+        {% endfor %}
+    </table>
+  </div>
+{% endblock %}

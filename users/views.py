@@ -1,6 +1,9 @@
-from django.shortcuts import render, redirect
+from django.db.models import Count
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+from .models import Profile
 
 from django.contrib.auth.models import User
 
@@ -20,25 +23,21 @@ def register(request):
 	context = {'form': form}
 	return render(request, 'users/register.html', context=context)
 
-def profile(request):
-	if request.user.is_authenticated:
-		correct = [post.id for post in request.user.profile.correct.all()]
-		attempted = [post.id for post in request.user.profile.attempted.all()]
-	else:
-		correct = request.session.get('correct_id', [])
-		attempted = request.session.get('attempt_id', [])
+def profile(request, username):
+	user = get_object_or_404(User, username=username)
+	correct = [post.id for post in user.profile.correct.all()]
+	attempted = [post.id for post in user.profile.attempted.all()]
+
 	context = {
+		'user': user,
 		'num_correct': len(correct),
 		'num_attempts': len(attempted),
 	}
 	return render(request, 'users/profile.html', context=context)
 
-def userprofile(request, username):
-	user = User.objects.get(username=username)
-	correct = [post.id for post in user.profile.correct.all()]
-	attempted = [post.id for post in user.profile.attempted.all()]
+def leaderboard(request):
+	profiles = Profile.objects.annotate(num_correct=Count('correct')).order_by('-num_correct')
 	context = {
-		'num_correct': len(correct),
-		'num_attempts': len(attempted),
+		'profiles': profiles,
 	}
-	return render(request, 'users/profile.html', context=context)
+	return render(request, 'leaderboard.html', context=context)

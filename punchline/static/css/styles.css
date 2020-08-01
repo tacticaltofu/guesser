@@ -7,6 +7,10 @@ a, a:hover {
 	text-decoration: none;
 }
 
+table {
+	width: 100%;
+}
+
 .header {
 	background-color: white;
 	padding: 10px;

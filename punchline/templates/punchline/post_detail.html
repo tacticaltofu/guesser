@@ -9,7 +9,7 @@
 	        		<a href="{% url 'delete_post' post.id %}" class="red-link">delete</a>
 	        		<a href="{% url 'update_post' post.id %}" class="red-link">update</a>
 	        	{% endifequal %}
-	        	<p class="text-muted">Submitted by <a href="#">{{ post.author }}</a> on <a href="#">{{ post.date_posted }}</a></p>
+	        	<p class="text-muted">Submitted by <a href="{% url 'profile' post.author.username %}">{{ post.author }}</a> on <a href="#">{{ post.date_posted }}</a></p>
 	            <p>{{ post.setup }}</p>
 	            <p>{{ post.punchline }}</p>
 	        </div>
@@ -17,7 +17,14 @@
 	    {% for response in post.response_set.all %}
 	    	<div class="media content border">
 	    		<div class="media-body">
-					<p class="formatted"><a href="#">{% if response.author %}{{ user.username }}{% else %}Anonymous{% endif %}</a> responded on <a href="#">{{ response.date_posted }}</a></p>
+					<p>
+						{% if response.author %}
+							<a href="{% url 'profile' response.author.username %}">{{ response.author.username }}</a>
+						{% else %}
+							<a href="#">Anonymous</a>
+						{% endif %} 
+						responded on <a href="#">{{ response.date_posted }}</a>
+					</p>
 					<p>{{ response }}</p>
 				</div>
 		    </div>
