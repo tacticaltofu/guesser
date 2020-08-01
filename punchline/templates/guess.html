@@ -20,13 +20,13 @@
 			</div>
 		</div>
 		<div>
-			{% if user.is_authenticated %}
-			{% else %}
-				<small class="text-muted">
-					{{ num_correct }} correct, {{ num_attempts }} attempts.
+			<small class="text-muted">
+				{{ num_correct }} correct, {{ num_attempts }} attempts.
+				{% if user.is_authenticated %}
+				{% else %}
 					<a href="{% url 'login' %}">Log in</a> or <a href="{% url 'register' %}">register</a> to save your score!
-				</small>
-			{% endif %}
+				{% endif %}
+			</small>
 		</div>
 	{% endif %}
 	

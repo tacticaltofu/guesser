@@ -40,3 +40,6 @@ class Response(models.Model):
 	@property
 	def short_content(self):
 		return truncatechars(self.content, 30)
+
+	class Meta:
+		ordering = ['-date_posted']

@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<div class="media content">
+	<div class="media-body">
+		<p>Are you sure you want to delete the post: {{ post.title }}?</p>
+		<form action="" method="POST">
+		  {% csrf_token %}
+		  <input type="submit" value="Yes, delete">
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'js/input_formatting.js' %}"></script>
+{% endblock %}

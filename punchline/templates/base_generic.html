@@ -32,6 +32,11 @@
       <ul>
         <div class="container">
           <li><a href="{% url 'index' %}">random</a></li>
+          {% if user.is_authenticated %}
+              <div class="nav-right">
+                  <li><a href="{% url 'create_post' %}">create post</a></li>
+              </div>
+          {% endif %}
         </div>    
       </ul>
     </div>

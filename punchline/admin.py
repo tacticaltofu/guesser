@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Post, Response
+from users.models import Profile
 
 # Register your models here.
 
@@ -10,3 +11,5 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Response)
 class ResponseAdmin(admin.ModelAdmin):
 	list_display = ('short_content', 'author', 'date_posted', 'score')
+
+admin.site.register(Profile)

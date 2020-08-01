@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="media content">
+	<div class="media-body">
+	  <form action="" method="post">
+	    {% csrf_token %}
+	    {{ form.title }}
+	    {{ form.setup }}
+	    {{ form.punchline }}
+	    <input type="submit" value="submit">
+	  </form>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'js/input_formatting.js' %}"></script>
+{% endblock %}

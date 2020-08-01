@@ -8,9 +8,9 @@
   
   {% if next %}
     {% if user.is_authenticated %}
-      <p>Your account does not have access to this page.</p>
+      <p class="alert alert-danger">You do not have access to this page.</p>
     {% else %}
-      <p>Please login to see this page.</p>
+      <p class="alert alert-danger">Please login to see this page.</p>
     {% endif %}
   {% endif %}
   <div class="form-box">

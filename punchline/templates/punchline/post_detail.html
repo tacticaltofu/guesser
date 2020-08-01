@@ -5,6 +5,10 @@
 		<div class="media content">
 	        <div class="media-body">
 	        	<h4><a href="#" class="media-heading">{{ post.title }}</a></h4>
+	        	{% ifequal user post.author %}
+	        		<a href="{% url 'delete_post' post.id %}" class="red-link">delete</a>
+	        		<a href="{% url 'update_post' post.id %}" class="red-link">update</a>
+	        	{% endifequal %}
 	        	<p class="text-muted">Submitted by <a href="#">{{ post.author }}</a> on <a href="#">{{ post.date_posted }}</a></p>
 	            <p>{{ post.setup }}</p>
 	            <p>{{ post.punchline }}</p>
@@ -13,12 +17,9 @@
 	    {% for response in post.response_set.all %}
 	    	<div class="media content border">
 	    		<div class="media-body">
-				{% if response.author %}
-				{% else %}
-					<p class=><a href="#">Anonymous</a> responded on <a href="#">{{ response.date_posted }}</a></p>
+					<p class="formatted"><a href="#">{% if response.author %}{{ user.username }}{% else %}Anonymous{% endif %}</a> responded on <a href="#">{{ response.date_posted }}</a></p>
 					<p>{{ response }}</p>
-				{% endif %}
-			</div>
+				</div>
 		    </div>
 		{% endfor %}
 	{% else %}
