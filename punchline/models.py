@@ -43,3 +43,19 @@ class Response(models.Model):
 
 	class Meta:
 		ordering = ['-date_posted']
+
+import csv
+
+def load_data():
+	author = User.objects.get(username='kevin')
+	with open('jokes.csv', 'r') as f:
+		reader = csv.reader(f)
+
+		i = 0
+		for line in reader:
+			if i > 100:
+				break
+			setup = line[1]
+			punchline = line[2]
+			Post.objects.create(title=setup[0:100], setup=setup, punchline=punchline, author=author)
+			i += 1

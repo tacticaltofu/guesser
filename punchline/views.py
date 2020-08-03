@@ -16,6 +16,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+from similarity.similar import similar
 # Create your views here.
 
 def index(request):
@@ -61,7 +62,7 @@ def guess(request, pk):
 				request.user.profile.attempted.add(post_to_guess)
 			else:
 				request.session['attempt_id'] = attempted
-			if form.cleaned_data['punchline'] == post_to_guess.punchline:
+			if similar(form.cleaned_data['punchline'], post_to_guess.punchline, 70):
 				correct.append(pk)
 				if request.user.is_authenticated:
 					request.user.profile.correct.add(post_to_guess)
