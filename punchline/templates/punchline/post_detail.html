@@ -9,7 +9,13 @@
 	        		<a href="{% url 'delete_post' post.id %}" class="red-link">delete</a>
 	        		<a href="{% url 'update_post' post.id %}" class="red-link">update</a>
 	        	{% endifequal %}
-	        	<p class="text-muted">Submitted by <a href="{% url 'profile' post.author.username %}">{{ post.author }}</a> on <a href="#">{{ post.date_posted }}</a></p>
+	        	<p class="text-muted">Submitted by 
+	        		{% if post.author %}
+	        			<a href="{% url 'profile' post.author.username %}">{{ post.author }}</a> 
+	        		{% else %}
+	        			<a href="#">Anonymous</a> 
+	        		{% endif %}
+	        		on <a href="#">{{ post.date_posted }}</a></p>
 	            <p>{{ post.setup }}</p>
 	            <p>{{ post.punchline }}</p>
 	        </div>
