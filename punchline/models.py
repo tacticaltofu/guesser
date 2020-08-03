@@ -57,5 +57,6 @@ def load_data():
 				break
 			setup = line[1]
 			punchline = line[2]
-			Post.objects.create(title=setup[0:100], setup=setup, punchline=punchline, author=author)
+			if len(punchline) < 100:
+				Post.objects.create(title=setup[0:100], setup=setup, punchline=punchline, author=author)
 			i += 1
